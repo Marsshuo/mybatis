@@ -24,7 +24,7 @@ public class UserDaoImpl implements UserDao {
 		SqlSession session = factory.openSession();
 		
 		//÷¥––sql”Ôæ‰
-		List<User> list = session.selectList("findAll");
+		List<User> list = session.selectList("findAllUser");
 		session.close();
 	
 		return list;

@@ -6,9 +6,9 @@ import com.neutech.bean.Dept;
 
 public interface DeptDao {
 	
-	List<Dept> findAll()throws Exception;
+	List<Dept> findAllDept()throws Exception;
 	
-	Dept finDeptById(int deptno)throws Exception;
+	Dept findDeptByDeptno(int deptno)throws Exception;
 	
 	int addDept(Dept dept)throws Exception;
 	

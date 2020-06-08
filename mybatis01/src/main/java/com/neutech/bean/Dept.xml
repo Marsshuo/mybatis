@@ -2,9 +2,21 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.neutech.dao.Dept">
-	<select id="findAll" resultType="com.neutech.bean.Dept">
+<mapper namespace="com.neutech.bean.Dept">
+	<select id="findAllDept" resultType="com.neutech.bean.Dept">
 	 select * from dept
 	</select>
+	<select id="findByDeptno" parameterType="java.lang.Integer" resultType="com.neutech.bean.Dept">
+	 select * from dept where deptno = #{deptno}
+	</select>
+	<insert id="addDept" parameterType="com.neutech.bean.Dept">
+	insert into dept (deptno,dname,loc) values(#{deptno},#{dname},#{loc});
+	</insert>
+	<delete id="deleteDeptByDeptno" parameterType="java.lang.Integer" >
+	delete from dept where deptno = #{deptno}
+	</delete>
+	<update id="updateDept" parameterType="com.neutech.bean.Dept">
+	update dept set dname = #{dname},loc = #{loc} where deptno = #{deptno}
+	</update>
 	
 </mapper>

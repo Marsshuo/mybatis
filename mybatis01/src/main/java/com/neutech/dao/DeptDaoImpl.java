@@ -9,12 +9,11 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import com.neutech.bean.Dept;
-import com.neutech.bean.User;
 
 public class DeptDaoImpl implements DeptDao {
 
 	@Override
-	public List<Dept> findAll() throws Exception {
+	public List<Dept> findAllDept() throws Exception {
 		//加载mybatis 的核心配置文件
 		InputStream inputStream = Resources.getResourceAsStream("config/SqlMapConfig.xml");
 		
@@ -22,17 +21,17 @@ public class DeptDaoImpl implements DeptDao {
 		SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(inputStream);
 		
 		//从工厂中获取与数据库的连接
-		SqlSession session = factory.openSession();
-		
+		SqlSession session = factory.openSession();		
+				
 		//执行sql语句
-		List<Dept> list = session.selectList("findAll");
+		List<Dept> list = session.selectList("findAllDept");
 		session.close();
 	
 		return list;		
 	}
 
 	@Override
-	public Dept finDeptById(int deptno) throws Exception {
+	public Dept findDeptByDeptno(int deptno) throws Exception {
 		//加载mybatis 的核心配置文件
 		InputStream inputStream = Resources.getResourceAsStream("config/SqlMapConfig.xml");
 		
@@ -42,7 +41,9 @@ public class DeptDaoImpl implements DeptDao {
 		//从工厂中获取与数据库的连接
 		SqlSession session = factory.openSession();		
 		
-		return null;
+		Dept dept = session.selectOne("findByDeptno", deptno);
+		session.close();
+		return dept;
 	}
 
 	@Override
@@ -54,7 +55,11 @@ public class DeptDaoImpl implements DeptDao {
 		
 		//从工厂中获取与数据库的连接
 		SqlSession session = factory.openSession();
-		return 0;
+		
+		int i = session.insert("addDept", dept);
+		session.commit();
+		session.close();
+		return i;
 	}
 
 	@Override
@@ -66,6 +71,10 @@ public class DeptDaoImpl implements DeptDao {
 		
 		//从工厂中获取与数据库的连接
 		SqlSession session = factory.openSession();
+		
+		int i = session.delete("deleteDeptByDeptno", deptno);
+		session.commit();
+		session.close();
 		return 0;
 	}
 
@@ -78,6 +87,10 @@ public class DeptDaoImpl implements DeptDao {
 		
 		//从工厂中获取与数据库的连接
 		SqlSession session = factory.openSession();
+		
+		session.update("updateDept", dept);
+		session.commit();
+		session.close();
 		return 0;
 	}
 
